@@ -58,11 +58,9 @@
         #boy { left: -150px; stroke: #00f2ff; filter: drop-shadow(0 0 20px #00f2ff); }
         #girl { right: -150px; stroke: #ff00de; filter: drop-shadow(0 0 20px #ff00de); }
 
-        /* Hug Animation Movement */
         .walk-in #boy { left: calc(50% - 85px); }
         .walk-in #girl { right: calc(50% - 85px); z-index: 11; }
 
-        /* Tamatar Style Message at the end */
         .tamatar-text {
             color: #ff4d4d;
             text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
@@ -70,6 +68,25 @@
             margin-top: 20px;
         }
 
+        /* Final Love Wall Page */
+        #love-wall {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .small-love {
+            position: absolute;
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: fadeInOut 2s infinite alternate;
+        }
+
+        @keyframes fadeInOut { from { opacity: 0.3; } to { opacity: 1; } }
         @keyframes pulse { from { opacity: 0.8; transform: scale(0.98); } to { opacity: 1; transform: scale(1.02); } }
 
         #tamatar-zone {
@@ -125,6 +142,7 @@
     </div>
 
     <div id="tamatar-zone"></div>
+    <div id="love-wall"></div>
 
     <script>
         const canvas = document.getElementById('canvas');
@@ -163,7 +181,7 @@
 
         function runStory() {
             document.getElementById('start-screen').style.display = 'none';
-            audio.play(); // Song plays here
+            audio.play();
             render();
 
             const bInterval = setInterval(() => {
@@ -179,14 +197,12 @@
                 document.getElementById('message-screen').style.display = 'none';
                 const stage = document.getElementById('dance-stage');
                 stage.style.display = 'block';
-                
-                // Start walking to Hug
                 setTimeout(() => stage.classList.add('walk-in'), 500);
                 
-                // Show final Tomato message after Hug
-                setTimeout(() => {
-                    showTamatar();
-                }, 4500);
+                setTimeout(() => { showTamatar(); }, 4500);
+                
+                // Final Love Wall Page after 10 seconds of Tamatar
+                setTimeout(() => { showLoveWall(); }, 12000);
 
             }, 7000);
         }
@@ -195,7 +211,7 @@
             const zone = document.getElementById('tamatar-zone');
             zone.style.display = 'block';
             const msg = document.getElementById('message-screen');
-            msg.innerHTML = "<div class='tamatar-text'>ABSE TERE TAMATER MERE 😭<br><span style='font-size:3rem'>TERE TAMATAR CHIYE MUJHE! 🍅😋</span></div>";
+            msg.innerHTML = "<div class='tamatar-text'>ABSE TERE TAMATER MERE 😭<br><span style='font-size:2.5rem'>TERE TAMATAR CHIYE MUJHE! 🍅😋</span></div>";
             msg.style.display = 'block';
 
             setInterval(() => {
@@ -206,6 +222,27 @@
                 zone.appendChild(t);
                 setTimeout(() => t.remove(), 3000);
             }, 150);
+        }
+
+        function showLoveWall() {
+            const wall = document.getElementById('love-wall');
+            wall.style.display = 'block';
+            
+            const colors = ['#ff00de', '#00f2ff', '#00ffcc', '#ffbd00', '#ff4d4d'];
+            
+            // Generate 200 small neon "I Love You" texts
+            for(let i=0; i<250; i++) {
+                const span = document.createElement('span');
+                span.className = 'small-love';
+                span.innerText = 'I LOVE YOU ANNU';
+                span.style.color = colors[Math.floor(Math.random() * colors.length)];
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.top = Math.random() * 100 + 'vh';
+                span.style.textShadow = `0 0 5px ${span.style.color}`;
+                span.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                span.style.animationDelay = (Math.random() * 2) + 's';
+                wall.appendChild(span);
+            }
         }
     </script>
 </body>
