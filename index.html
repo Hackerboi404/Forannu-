@@ -21,85 +21,51 @@
         canvas { position: absolute; top: 0; left: 0; z-index: 1; }
         #ui-layer { position: relative; z-index: 10; text-align: center; width: 100%; }
 
-        /* Start Button */
         .start-btn {
             padding: 20px 50px; font-size: 1.8rem; background: transparent;
             color: #ff00de; border: 4px solid #ff00de; border-radius: 50px;
             cursor: pointer; box-shadow: 0 0 30px #ff00de; font-family: 'Monoton', cursive;
-            transition: 0.3s;
         }
 
-        /* Neon Glowing Text */
         .neon-msg {
             display: none;
             font-family: 'Monoton', cursive;
             font-size: 3rem;
             color: #fff;
-            text-shadow: 0 0 10px #ff00de, 0 0 20px #ff00de, 0 0 40px #ff00de, 0 0 80px #ff00de;
+            text-shadow: 0 0 10px #ff00de, 0 0 20px #ff00de, 0 0 40px #ff00de;
             animation: pulse 1s infinite alternate;
-            line-height: 1.2;
         }
 
-        /* Neon Hug Stage */
-        .stage {
-            display: none;
-            position: relative;
-            height: 400px;
-            width: 100%;
-        }
-
-        .neon-char {
-            position: absolute;
-            bottom: 50px;
-            width: 120px;
-            transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
+        .stage { display: none; position: relative; height: 400px; width: 100%; }
+        .neon-char { position: absolute; bottom: 50px; width: 120px; transition: all 2.5s ease-in-out; }
         #boy { left: -150px; stroke: #00f2ff; filter: drop-shadow(0 0 20px #00f2ff); }
         #girl { right: -150px; stroke: #ff00de; filter: drop-shadow(0 0 20px #ff00de); }
-
         .walk-in #boy { left: calc(50% - 85px); }
         .walk-in #girl { right: calc(50% - 85px); z-index: 11; }
 
-        .tamatar-text {
-            color: #ff4d4d;
-            text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
-            font-size: 2.5rem;
-            margin-top: 20px;
-        }
+        #tamatar-zone { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
+        .tomato-rain { position: absolute; font-size: 40px; animation: fall 3s linear forwards; }
 
-        /* Final Love Wall Page */
+        /* FINAL LOVE WALL - FIXED */
         #love-wall {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
-            z-index: 100;
+            z-index: 1000; /* Sabse upar */
             overflow: hidden;
         }
-
         .small-love {
             position: absolute;
-            font-size: 14px;
             font-weight: bold;
             white-space: nowrap;
-            animation: fadeInOut 2s infinite alternate;
+            font-family: 'Arial', sans-serif;
+            animation: blinker 1.5s infinite alternate;
         }
 
-        @keyframes fadeInOut { from { opacity: 0.3; } to { opacity: 1; } }
-        @keyframes pulse { from { opacity: 0.8; transform: scale(0.98); } to { opacity: 1; transform: scale(1.02); } }
-
-        #tamatar-zone {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 20;
-        }
-
-        .tomato-rain {
-            position: absolute; font-size: 40px; animation: fall 3s linear forwards;
-        }
+        @keyframes blinker { from { opacity: 0.4; transform: scale(0.9); } to { opacity: 1; transform: scale(1.1); } }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        @keyframes pulse { from { opacity: 0.8; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -112,31 +78,18 @@
 
     <div id="ui-layer">
         <div id="start-screen">
-            <button class="start-btn" onclick="runStory()">SURPRISE START ❤️</button>
+            <button class="start-btn" onclick="runStory()">Annu Click Karo ❤️</button>
         </div>
-
         <div id="message-screen" class="neon-msg">
-            I LOVE YOU ANNU ❤️ <br>
-            <span style="font-size: 1.5rem; color: #00f2ff; text-shadow: 0 0 10px #00f2ff;">Half Gf Hai Tu Meri! ✨</span>
+            I LOVE YOU ANNU ❤️<br>
+            <span style="font-size: 1.5rem; color: #00f2ff;">Half Gf Hai Tu Meri! ✨</span>
         </div>
-
         <div id="dance-stage" class="stage">
             <svg id="boy" class="neon-char" viewBox="0 0 100 200">
-                <circle cx="50" cy="30" r="15" fill="none" stroke-width="5"/>
-                <line x1="50" y1="45" x2="50" y2="120" stroke-width="5"/>
-                <line x1="50" y1="70" x2="85" y2="60" stroke-width="5" id="b-arm-r"/>
-                <line x1="50" y1="70" x2="15" y2="60" stroke-width="5" id="b-arm-l"/>
-                <line x1="50" y1="120" x2="30" y2="180" stroke-width="5"/>
-                <line x1="50" y1="120" x2="70" y2="180" stroke-width="5"/>
+                <circle cx="50" cy="30" r="15" fill="none" stroke-width="5"/><line x1="50" y1="45" x2="50" y2="120" stroke-width="5"/><line x1="50" y1="70" x2="85" y2="60" stroke-width="5"/><line x1="50" y1="70" x2="15" y2="60" stroke-width="5"/><line x1="50" y1="120" x2="30" y2="180" stroke-width="5"/><line x1="50" y1="120" x2="70" y2="180" stroke-width="5"/>
             </svg>
-
             <svg id="girl" class="neon-char" viewBox="0 0 100 200">
-                <circle cx="50" cy="30" r="15" fill="none" stroke-width="5"/>
-                <path d="M50 45 L30 120 L70 120 Z" fill="none" stroke-width="5"/>
-                <line x1="40" y1="70" x2="10" y2="60" stroke-width="5"/>
-                <line x1="60" y1="70" x2="90" y2="60" stroke-width="5"/>
-                <line x1="40" y1="120" x2="30" y2="180" stroke-width="5"/>
-                <line x1="60" y1="120" x2="70" y2="180" stroke-width="5"/>
+                <circle cx="50" cy="30" r="15" fill="none" stroke-width="5"/><path d="M50 45 L30 120 L70 120 Z" fill="none" stroke-width="5"/><line x1="40" y1="70" x2="10" y2="60" stroke-width="5"/><line x1="60" y1="70" x2="90" y2="60" stroke-width="5"/><line x1="40" y1="120" x2="30" y2="180" stroke-width="5"/><line x1="60" y1="120" x2="70" y2="180" stroke-width="5"/>
             </svg>
         </div>
     </div>
@@ -156,24 +109,17 @@
 
         function createBlast(x, y) {
             const color = `hsl(${Math.random()*360}, 100%, 50%)`;
-            for(let i=0; i<40; i++) {
-                particles.push({
-                    x, y, 
-                    vx: (Math.random()-0.5)*12, 
-                    vy: (Math.random()-0.5)*12, 
-                    life: 1, 
-                    color
-                });
+            for(let i=0; i<30; i++) {
+                particles.push({x, y, vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, life: 1, color});
             }
         }
 
         function render() {
-            ctx.fillStyle = 'rgba(0,0,0,0.15)';
+            ctx.fillStyle = 'rgba(0,0,0,0.1)';
             ctx.fillRect(0,0,canvas.width, canvas.height);
             particles.forEach((p, i) => {
                 p.x += p.vx; p.y += p.vy; p.life -= 0.02;
-                ctx.fillStyle = p.color;
-                ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
                 if(p.life <= 0) particles.splice(i, 1);
             });
             requestAnimationFrame(render);
@@ -184,62 +130,53 @@
             audio.play();
             render();
 
-            const bInterval = setInterval(() => {
-                createBlast(Math.random()*canvas.width, Math.random()*canvas.height);
-            }, 700);
+            const bInt = setInterval(() => createBlast(Math.random()*canvas.width, Math.random()*canvas.height), 800);
+
+            setTimeout(() => document.getElementById('message-screen').style.display = 'block', 2000);
 
             setTimeout(() => {
-                document.getElementById('message-screen').style.display = 'block';
-            }, 2500);
-
-            setTimeout(() => {
-                clearInterval(bInterval);
+                clearInterval(bInt);
                 document.getElementById('message-screen').style.display = 'none';
                 const stage = document.getElementById('dance-stage');
                 stage.style.display = 'block';
                 setTimeout(() => stage.classList.add('walk-in'), 500);
-                
-                setTimeout(() => { showTamatar(); }, 4500);
-                
-                // Final Love Wall Page after 10 seconds of Tamatar
-                setTimeout(() => { showLoveWall(); }, 12000);
-
-            }, 7000);
+                setTimeout(() => { showTamatar(); }, 4000);
+            }, 6000);
         }
 
         function showTamatar() {
-            const zone = document.getElementById('tamatar-zone');
-            zone.style.display = 'block';
+            document.getElementById('tamatar-zone').style.display = 'block';
             const msg = document.getElementById('message-screen');
-            msg.innerHTML = "<div class='tamatar-text'>ABSE TERE TAMATER MERE 😭<br><span style='font-size:2.5rem'>TERE TAMATAR CHIYE MUJHE! 🍅😋</span></div>";
+            msg.innerHTML = "<div style='color:#ff4d4d; text-shadow:0 0 15px #f00; font-size:2rem;'>TERE TAMATAR CHIYE MUJHE! 🍅😋</div>";
             msg.style.display = 'block';
 
             setInterval(() => {
                 const t = document.createElement('div');
-                t.className = 'tomato-rain';
-                t.innerHTML = '🍅';
+                t.className = 'tomato-rain'; t.innerHTML = '🍅';
                 t.style.left = Math.random() * 100 + 'vw';
-                zone.appendChild(t);
+                document.getElementById('tamatar-zone').appendChild(t);
                 setTimeout(() => t.remove(), 3000);
             }, 150);
+
+            // FINAL STAGE AFTER 5 SECONDS OF TAMATAR
+            setTimeout(showLoveWall, 5000);
         }
 
         function showLoveWall() {
             const wall = document.getElementById('love-wall');
             wall.style.display = 'block';
+            const colors = ['#ff00de', '#00f2ff', '#00ffcc', '#ffbd00', '#ff4d4d', '#fff'];
             
-            const colors = ['#ff00de', '#00f2ff', '#00ffcc', '#ffbd00', '#ff4d4d'];
-            
-            // Generate 200 small neon "I Love You" texts
-            for(let i=0; i<250; i++) {
+            for(let i=0; i<300; i++) {
                 const span = document.createElement('span');
                 span.className = 'small-love';
                 span.innerText = 'I LOVE YOU ANNU';
-                span.style.color = colors[Math.floor(Math.random() * colors.length)];
+                const color = colors[Math.floor(Math.random()*colors.length)];
+                span.style.color = color;
                 span.style.left = Math.random() * 100 + 'vw';
                 span.style.top = Math.random() * 100 + 'vh';
-                span.style.textShadow = `0 0 5px ${span.style.color}`;
-                span.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                span.style.fontSize = (Math.random() * 8 + 8) + 'px';
+                span.style.textShadow = `0 0 5px ${color}`;
                 span.style.animationDelay = (Math.random() * 2) + 's';
                 wall.appendChild(span);
             }
