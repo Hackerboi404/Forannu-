@@ -38,14 +38,15 @@
         #love-wall {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 1000; overflow: hidden;
-            grid-template-columns: repeat(6, 1fr); padding: 10px;
+            display: grid; grid-template-columns: repeat(6, 1fr); padding: 10px;
         }
         .small-love {
             font-size: 10px; font-weight: bold; text-align: center;
             align-self: center; animation: glow 2s infinite alternate;
+            font-family: Arial, sans-serif;
         }
 
-        @keyframes glow { from { opacity: 0.4; } to { opacity: 1; text-shadow: 0 0 10px currentColor; } }
+        @keyframes glow { from { opacity: 0.4; transform: scale(0.9); } to { opacity: 1; text-shadow: 0 0 10px currentColor; transform: scale(1.1); } }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         @keyframes pulse { from { opacity: 0.8; transform: scale(0.95); } to { opacity: 1; transform: scale(1.05); } }
 
@@ -54,10 +55,6 @@
     </style>
 </head>
 <body>
-
-    <audio id="bg-music" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Kiss-Me-Close-Your-Eyes.mp3" type="audio/mpeg">
-    </audio>
 
     <canvas id="canvas"></canvas>
 
@@ -85,7 +82,6 @@
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        const audio = document.getElementById('bg-music');
         let particles = [];
 
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -94,8 +90,8 @@
 
         function createBlast(x, y) {
             const color = `hsl(${Math.random()*360}, 100%, 50%)`;
-            for(let i=0; i<20; i++) {
-                particles.push({x, y, vx: (Math.random()-0.5)*8, vy: (Math.random()-0.5)*8, life: 1, color});
+            for(let i=0; i<25; i++) {
+                particles.push({x, y, vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, life: 1, color});
             }
         }
 
@@ -112,13 +108,15 @@
 
         function runStory() {
             document.getElementById('start-screen').style.display = 'none';
-            audio.play().catch(() => console.log("Audio play blocked"));
             render();
 
-            const bInt = setInterval(() => createBlast(Math.random()*canvas.width, Math.random()*canvas.height), 800);
+            // Fireworks sequence
+            const bInt = setInterval(() => createBlast(Math.random()*canvas.width, Math.random()*canvas.height), 700);
 
+            // Show text after fireworks
             setTimeout(() => document.getElementById('message-screen').style.display = 'block', 1500);
 
+            // Switch to Dance & Hug after 5 seconds
             setTimeout(() => {
                 clearInterval(bInt);
                 document.getElementById('message-screen').style.display = 'none';
@@ -132,35 +130,36 @@
         function showTamatar() {
             document.getElementById('tamatar-zone').style.display = 'block';
             const msg = document.getElementById('message-screen');
-            msg.innerHTML = "<div style='color:#ff4d4d; font-size:1.8rem;'>TERE TAMATAR CHIYE MUJHE! 🍅😋</div>";
+            msg.innerHTML = "<div style='color:#ff4d4d; font-size:1.8rem; text-shadow: 0 0 10px #f00;'>TERE TAMATAR CHIYE MUJHE! 🍅😋</div>";
             msg.style.display = 'block';
 
             const tRain = setInterval(() => {
                 const t = document.createElement('div');
                 t.className = 'tomato-rain'; t.innerHTML = '🍅';
-                t.style.left = Math.random() * 90 + 'vw';
+                t.style.left = Math.random() * 95 + 'vw';
                 document.getElementById('tamatar-zone').appendChild(t);
                 setTimeout(() => t.remove(), 3000);
             }, 200);
 
+            // Final transition to Love Wall
             setTimeout(() => {
                 clearInterval(tRain);
                 showLoveWall();
-            }, 6000);
+            }, 7000);
         }
 
         function showLoveWall() {
             const wall = document.getElementById('love-wall');
             wall.style.display = 'grid';
-            const colors = ['#ff00de', '#00f2ff', '#00ffcc', '#ffbd00', '#ff4d4d'];
+            const colors = ['#ff00de', '#00f2ff', '#00ffcc', '#ffbd00', '#ff4d4d', '#fff'];
             
-            for(let i=0; i<150; i++) {
+            for(let i=0; i<180; i++) {
                 const span = document.createElement('span');
                 span.className = 'small-love';
                 span.innerText = 'I ❤️ ANNU';
                 const color = colors[Math.floor(Math.random()*colors.length)];
                 span.style.color = color;
-                span.style.margin = "10px 0";
+                span.style.margin = "8px 0";
                 wall.appendChild(span);
             }
         }
