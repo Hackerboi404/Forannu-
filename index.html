@@ -25,6 +25,7 @@
             padding: 20px 50px; font-size: 1.8rem; background: transparent;
             color: #ff00de; border: 4px solid #ff00de; border-radius: 50px;
             cursor: pointer; box-shadow: 0 0 30px #ff00de; font-family: 'Monoton', cursive;
+            transition: 0.3s;
         }
 
         .neon-msg {
@@ -46,21 +47,36 @@
         #tamatar-zone { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
         .tomato-rain { position: absolute; font-size: 40px; animation: fall 3s linear forwards; }
 
-        /* FINAL LOVE WALL - FIXED */
+        /* FINAL LOVE WALL - NEW & IMPROVED STYLING */
         #love-wall {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
-            z-index: 1000; /* Sabse upar */
+            z-index: 1000;
             overflow: hidden;
+            display: grid; /* Grid system for clean spacing */
+            grid-template-columns: repeat(12, 1fr); /* Divide into 12 columns */
+            grid-template-rows: repeat(12, 1fr); /* Divide into 12 rows */
+            padding: 10px;
+            box-sizing: border-box;
         }
         .small-love {
-            position: absolute;
+            position: relative; /* Position relative within the grid cell */
             font-weight: bold;
             white-space: nowrap;
-            font-family: 'Arial', sans-serif;
-            animation: blinker 1.5s infinite alternate;
+            font-family: 'Monoton', cursive; /* More stylistic font */
+            animation: glowCycle 2s infinite alternate;
+            justify-self: center; /* Center horizontally in cell */
+            align-self: center; /* Center vertically in cell */
+            font-size: 11px; /* Optimal size to not look like big text but not tiny */
+            text-transform: uppercase;
+        }
+
+        /* Neon Glow Animation */
+        @keyframes glowCycle {
+            from { opacity: 0.5; text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; transform: scale(0.95); }
+            to { opacity: 1; text-shadow: 0 0 15px currentColor, 0 0 25px currentColor; transform: scale(1.05); }
         }
 
         @keyframes blinker { from { opacity: 0.4; transform: scale(0.9); } to { opacity: 1; transform: scale(1.1); } }
@@ -158,27 +174,35 @@
                 setTimeout(() => t.remove(), 3000);
             }, 150);
 
-            // FINAL STAGE AFTER 5 SECONDS OF TAMATAR
-            setTimeout(showLoveWall, 5000);
+            // FINAL STAGE AFTER 7 SECONDS OF TAMATAR - SLIGHTLY DELAYED FOR EFFECT
+            setTimeout(showLoveWall, 7000);
         }
 
         function showLoveWall() {
             const wall = document.getElementById('love-wall');
-            wall.style.display = 'block';
+            wall.style.display = 'grid'; // Enable Grid
             const colors = ['#ff00de', '#00f2ff', '#00ffcc', '#ffbd00', '#ff4d4d', '#fff'];
             
-            for(let i=0; i<300; i++) {
-                const span = document.createElement('span');
-                span.className = 'small-love';
-                span.innerText = 'I LOVE YOU ANNU';
-                const color = colors[Math.floor(Math.random()*colors.length)];
-                span.style.color = color;
-                span.style.left = Math.random() * 100 + 'vw';
-                span.style.top = Math.random() * 100 + 'vh';
-                span.style.fontSize = (Math.random() * 8 + 8) + 'px';
-                span.style.textShadow = `0 0 5px ${color}`;
-                span.style.animationDelay = (Math.random() * 2) + 's';
-                wall.appendChild(span);
+            // Generate structured neon text wall
+            // 12 columns * 12 rows = 144 text instances, optimal for mobile without crowding.
+            for(let r=0; r<12; r++) {
+                for(let c=0; c<12; c++) {
+                    const span = document.createElement('span');
+                    span.className = 'small-love';
+                    span.innerText = 'I ❤️ ANNU'; // Heart included, smaller text body
+                    const color = colors[Math.floor(Math.random()*colors.length)];
+                    span.style.color = color;
+                    span.style.gridColumnStart = c + 1; // Assign to grid column
+                    span.style.gridRowStart = r + 1; // Assign to grid row
+                    span.style.animationDelay = (Math.random() * 2) + 's'; // Random pulse delay
+                    
+                    // Casual offset to not make it look *too* robotic, but still neat
+                    const offsetX = (Math.random() - 0.5) * 10;
+                    const offsetY = (Math.random() - 0.5) * 10;
+                    span.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                    
+                    wall.appendChild(span);
+                }
             }
         }
     </script>
