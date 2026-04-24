@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 from config import TOKEN, WEB_APP_URL
 
-# /start command
+# /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🏏 Neon Cricket\n\n"
@@ -17,7 +17,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Good luck! 🚀"
     )
 
-# /play command
+# /play
 async def play(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [InlineKeyboardButton(
@@ -31,8 +31,8 @@ async def play(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
-# bot runner (FIXED)
-async def start_bot():
+# 🔥 IMPORTANT: async hata diya
+def start_bot():
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
@@ -40,5 +40,5 @@ async def start_bot():
 
     print("🤖 Bot Started...")
 
-    # 🔥 FIX HERE
-    await app.run_polling(stop_signals=None)
+    # 🔥 FINAL FIX
+    app.run_polling(stop_signals=None)
