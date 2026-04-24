@@ -31,7 +31,7 @@ async def play(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
-# bot runner
+# bot runner (FIXED)
 async def start_bot():
     app = ApplicationBuilder().token(TOKEN).build()
 
@@ -39,4 +39,6 @@ async def start_bot():
     app.add_handler(CommandHandler("play", play))
 
     print("🤖 Bot Started...")
-    await app.run_polling()
+
+    # 🔥 FIX HERE
+    await app.run_polling(stop_signals=None)
