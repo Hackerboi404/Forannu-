@@ -1,3 +1,4 @@
+import asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
@@ -10,9 +11,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Rules:\n"
         "• Enter your name\n"
         "• Click Save\n"
-        "• Start playing\n"
-        "• Survive 30 balls\n"
-        "• Score appears on leaderboard\n\n"
+        "• Start playing\n\n"
         "Good luck! 🚀"
     )
 
@@ -23,14 +22,18 @@ async def play(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
-# 🔥 IMPORTANT: this is now a NORMAL function
 def start_bot():
+    # 🔥 Sabse important fix: Naya event loop banaya thread ke liye
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("play", play))
 
-    print("🤖 Bot Started...")
-
-    # ❗ No await, no asyncio here
+    print("🤖 Bot Started and Polling...")
+    
+    # Render compatibility ke liye stop_signals=None
     app.run_polling(stop_signals=None)
+    
