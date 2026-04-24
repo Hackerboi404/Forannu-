@@ -16,10 +16,10 @@ def run_bot():
 if __name__ == "__main__":
     print("🚀 Starting Server + Bot...")
 
-    # Bot background me
+    # Bot thread me run hoga
     t = threading.Thread(target=run_bot)
     t.start()
 
-    # Render port fix (VERY IMPORTANT)
+    # Render port (IMPORTANT)
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
